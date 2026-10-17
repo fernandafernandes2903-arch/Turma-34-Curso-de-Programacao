@@ -39,9 +39,30 @@ function condicao($nota) {
     if ($nota >= 7) {
         echo "Aprovado";
     } else {
-        echo "Reprovado";
+        echo "Reprovado\n";
     }
 }
+
+function saudar($nome, $titulo = "Sr(a)"){
+    echo "Olá " . $titulo . " " . $nome;
+};
+
+    saudar("Carlos", "Dr");
+
+function calcularTotal($preco){
+    $imposto = 5.0;
+    return $preco + $imposto;};
+    
+    $desconto = 10%
+    $desconto = 10;
+$aplicarDesconto = 
+function ($valor) use ($desconto){
+    return $valor - $desconto;
+};
+echo $aplicarDesconto(100);
+    
+
+
 
 
 ?>
