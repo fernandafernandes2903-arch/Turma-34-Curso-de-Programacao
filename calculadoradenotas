@@ -1,0 +1,25 @@
+<?php
+$notas = ["float $prova1", "float $prova2"];
+
+$peso1 = 0.40;
+$peso2 = 0.60;
+
+$prova1 = (float) readline("Qual o valor da 1a nota?");
+$prova2 = (float) readline("Qual o valor da 2a nota?");
+$presenca = (float) readline ("Qual a porcentagem de presença?")
+$notafinal = (($peso1 * $prova1) + ($peso2 * $prova2));
+
+if ($notafinal < 0 || $notafinal > 10.00) {
+    echo "A nota está errada. Insira a nota correta";
+} elseif ($notafinal >= 7.00) {
+    echo "Aprovado";
+} elseif ($notafinal > 5.00) {
+    echo "Em recuperação";
+} else {
+    echo "Reprovado";
+}
+
+if ($notafinal >= 7.00 && $presença >= 70 ){echo "Aprovado"}
+else ($notafinal < 7.0 && $presenca < 70){echo "Reprovado"}
+
+?>
