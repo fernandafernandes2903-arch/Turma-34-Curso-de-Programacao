@@ -1,0 +1,102 @@
+<?php
+$produtos = [
+["nome" => "Camiseta polo",
+"preco" => 95.00, 
+"categoria" => "camisetas"],
+["nome" => "Blusa branca de algodão",
+"preco" => 68.90, 
+"categoria" => "camisetas"],
+["nome" => "Blusa de malhar",
+"preco" => 78.90, 
+"categoria" => "camisetas"],
+["nome" => "Tenis Puma",
+"preco" => 199.99, 
+"categoria" => "Tenis"],
+["nome" => "Tenis Olympicos",
+"preco" => 299.89, 
+"categoria" => "Tenis"],
+["nome" => "Tenis Nike",
+"preco" => 899.89, 
+"categoria" => "Tenis"],
+["nome" => "Tenis Adidas",
+"preco" => 399.00, 
+"categoria" => "Tenis"],
+["nome" => "Short de malha preto",
+"preco" => 79.90, 
+"categoria" => "Shorts"],
+["nome" => "Short jeans",
+"preco" => 199.69, 
+"categoria" => "Shorts"],
+["nome" => "Óculos Chilli Beans",
+"preco" => 289.99, 
+"categoria" => "Óculos"]];
+ 
+  do{ 
+echo "MENU.\n";
+echo "1. " . $produtos[0]["nome"] . " - R$ " . number_format($produtos[0]["preco"], 2, ',', '.') . "\n";
+echo "2. " . $produtos[1]["nome"] . " - R$ " . number_format($produtos[1]["preco"], 2, ',', '.') . "\n";
+echo "3. " . $produtos[2]["nome"] . " - R$ " . number_format($produtos[2]["preco"], 2, ',', '.') . "\n";
+echo "4. " . $produtos[3]["nome"] . " - R$ " . number_format($produtos[3]["preco"], 2, ',', '.') . "\n";
+echo "5. " . $produtos[4]["nome"] . " - R$ " . number_format($produtos[4]["preco"], 2, ',', '.') . "\n";
+echo "6. " . $produtos[5]["nome"] . " - R$ " . number_format($produtos[5]["preco"], 2, ',', '.') . "\n";
+echo "7. " . $produtos[6]["nome"] . " - R$ " . number_format($produtos[6]["preco"], 2, ',', '.') . "\n";
+echo "8. " . $produtos[7]["nome"] . " - R$ " . number_format($produtos[7]["preco"], 2, ',', '.') . "\n";
+echo "9. " . $produtos[8]["nome"] . " - R$ " . number_format($produtos[8]["preco"], 2, ',', '.') . "\n";
+echo "10. " . $produtos[9]["nome"] . " - R$ " . number_format($produtos[9]["preco"], 2, ',', '.') . "\n";
+echo "11. Não. Favor finalizar.\n";
+
+$escolha[0] = readline ("Qual opções você escolhe?");
+$quantidade[0] = readline ("Qual a quantidade?");
+$escolha[1] = readline ("Você quer mais algum item?");
+$quantidade[1] = readline ("Qual a quantidade?");
+$escolha[2] = readline ("Você deseja mais alguma coisa?");
+$quantidade[2] = readline ("Qual a quantidade?");
+}
+while (($escolha ?? null) === "11");
+
+echo "===========================================================================================.\n";
+echo "RECIBO.\n";
+echo "===========================================================================================.\n";
+
+if (!empty($escolha)) {
+    foreach ($escolha as $indice => $opcao) {
+        if ($opcao === "11" || $opcao === null || $opcao === "") {
+            continue;
+        }
+
+        $produto = $produtos[(int) $opcao - 1] ?? null;
+        if ($produto !== null) {
+            $qtde = (int) ($quantidade[$indice] ?? 1);
+            if ($qtde <= 0) {
+                echo "Erro. Quantidade inválida.\n";
+                continue;
+            }
+
+            echo $produto["nome"] . " - R$ " . number_format($produto["preco"] * $qtde, 2, ',', '.') . "\n";
+        }
+    }
+} elseif (in_array("0", $quantidade, true)) {
+    echo "Erro. Quantidade inválida.";
+} elseif (($escolha ?? null) === "11") {
+    exit;
+    // Compra finalizada.
+}
+
+$precos = [1 => 95.00, 2 => 68.90, 3 => 78.90, 4 => 199.99, 5 => 299.89, 6 => 899.89, 7 => 399.00, 8 => 79.90, 9 => 199.69, 10 => 289.99, 11 => 0];
+$somatotal = 0;
+foreach ($escolha as $indice => $opcao) {
+    if ($opcao === "11" || $opcao === null || $opcao === "") {
+        continue;
+    }
+
+    if (isset($precos[(int) $opcao])) {
+        $somatotal += $precos[(int) $opcao] * ((int) ($quantidade[$indice] ?? 0));
+    }
+}
+
+echo ".\n=========================================================================================.\n";
+echo ".\n.Sua compra ficou no valor de R$ " . number_format($somatotal, 2, ',', '.') . ".\n";
+echo ".\n=========================================================================================.\n";
+
+
+// ?>
