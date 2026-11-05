@@ -1,0 +1,138 @@
+<?php
+
+$jogadores = [
+    [
+        "nome" => "Van Hiden",
+        "vida" => 500,
+        "ataque" => 94,
+        "defesa" => 85,
+        "familia" => "Van Helsin"
+    ],
+    [
+        "nome" => "Iden Holsk",
+        "vida" => 500,
+        "ataque" => 86,
+        "defesa" => 95,
+        "familia" => "Hindeskoft"
+    ]
+];
+
+// Calcula o dano aleatório
+
+function calcularDano($ataque, $defesa) {
+
+    $danoBase = rand(50, $ataque);
+
+    $dano = $danoBase - ($defesa * 0.3);
+
+    return max(10, (int) $dano);
+}
+
+
+
+// Executa um ataque
+function ataque(&$jogador1, &$jogador2) {
+
+    $dano = calcularDano(
+        $jogador1["ataque"],
+        $jogador2["defesa"]
+    );
+
+    $jogador2["vida"] -= $dano;
+
+    $jogador2["vida"] = max(0, $jogador2["vida"]);
+
+    echo $jogador1["nome"] . " atacou ";
+    echo $jogador2["nome"];
+    echo " causando " . $dano . " de dano!<br>";
+
+    echo "Vida de " . $jogador2["nome"];
+    echo ": " . $jogador2["vida"] . "<br><br>";
+}
+
+// Cura aleatória
+function curar(&$jogador) {
+
+    $cura = rand(0, 150);
+
+    $jogador["vida"] += $cura;
+
+    $jogador["vida"] = min(500, $jogador["vida"]);
+
+    echo $jogador["nome"];
+    echo " recuperou vida! Cura: " . $cura . "<br>";
+
+    echo "Vida atual: " . $jogador["vida"] . "<br><br>";
+}
+
+// Ataque duplo
+function ataqueDuplo(&$jogador1, &$jogador2) {
+
+    echo $jogador1["nome"] . " realizou um ataque duplo!<br>";
+
+    for ($i = 0; $i < 2; $i++) {
+
+        if ($jogador2["vida"] <= 0) {
+            break;
+        }
+
+        ataque($jogador1, $jogador2);
+    }
+}
+
+// Inicia a batalha
+function iniciarBatalha(&$jogadores) {
+
+    echo "<h2>A batalha começou!</h2>";
+
+    echo $jogadores[0]["nome"];
+    echo " VS ";
+    echo $jogadores[1]["nome"] . "<br><br>";
+
+    while (
+        $jogadores[0]["vida"] > 0 &&
+        $jogadores[1]["vida"] > 0
+    ) {
+
+        // Sorteia quem começa
+        $ordem = rand(0, 1);
+
+        $atacante = $ordem;
+        $defensor = 1 - $ordem;
+
+        // Sorteia a ação
+        $acao = rand(1, 3);
+
+        if ($acao == 1) {
+
+            ataque(
+                $jogadores[$atacante],
+                $jogadores[$defensor]
+            );
+
+        } elseif ($acao == 2) {
+
+            ataqueDuplo(
+                $jogadores[$atacante],
+                $jogadores[$defensor]
+            );
+
+        } else {
+
+            curar($jogadores[$atacante]);
+        }
+
+        // Verifica o vencedor
+        if ($jogadores[$defensor]["vida"] <= 0) {
+            echo "<h2>Vencedor: ";
+            echo $jogadores[$atacante]["nome"];
+            echo "!</h2>";
+            break;
+        }
+    }
+}
+
+// Executa o jogo
+iniciarBatalha($jogadores);
+
+?>
